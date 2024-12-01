@@ -1,0 +1,925 @@
+/*-----------------------------------*\
+ * #CUSTOM PROPERTY
+\*-----------------------------------*/
+
+:root {
+
+    /**
+     * colors
+     */
+  
+    --united-nations-blue: hsl(214, 56%, 58%);
+    --bright-navy-blue: hsl(214, 57%, 51%);
+    --spanish-gray: hsl(0, 0%, 60%);
+    --black-coral: hsl(225, 8%, 42%);
+    --oxford-blue: hsl(208, 97%, 12%);
+    --yale-blue: hsl(214, 72%, 33%);
+    --blue-ncs: hsl(197, 100%, 36%);
+    --gunmetal: hsl(206, 34%, 20%);
+    --gainsboro: hsl(0, 0%, 88%);
+    --cultured: hsl(0, 0%, 98%);
+    --white: hsl(0, 0%, 100%);
+    --black: hsl(0, 0%, 0%);
+    --onyx: hsl(0, 0%, 25%);
+    --jet: hsl(0, 0%, 20%);
+  
+    /**
+     * typography
+     */
+  
+    --ff-poppins: "Poppins", sans-serif;
+    --ff-montserrat: "Montserrat", sans-serif;
+  
+    --fs-1: calc(20px + 3.5vw);
+    --fs-2: calc(18px + 1.6vw);
+    --fs-3: calc(16px + 0.45vw);
+    --fs-4: 15px;
+    --fs-5: 14px;
+    --fs-6: 13px;
+    --fs-7: 12px;
+    --fs-8: 11px;
+  
+    --fw-500: 500;
+    --fw-600: 600;
+    --fw-700: 700;
+    --fw-800: 800;
+  
+    /**
+     * transition
+     */
+  
+    --transition: 0.25s ease-in-out;
+  
+    /**
+     * spacing
+     */
+  
+    --section-padding: 60px;
+  
+    /**
+     * border-radius
+     */
+  
+    --radius-15: 15px;
+    --radius-25: 25px;
+  
+  }
+  
+
+  
+  /*-----------------------------------*\
+   * #RESET
+  \*-----------------------------------*/
+  
+  *, *::before, *::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  li { list-style: none; }
+  
+  a { text-decoration: none; }
+  
+  a,
+  img,
+  span,
+  input,
+  label,
+  button,
+  ion-icon { display: block; }
+  
+  input,
+  button {
+    background: none;
+    border: none;
+    font: inherit;
+  }
+  
+  button { cursor: pointer; }
+  
+  input { width: 100%; }
+  
+  ion-icon { pointer-events: none; }
+  
+  html {
+    font-family: var(--ff-poppins);
+    scroll-behavior: smooth;
+  }
+  
+  
+  
+  
+  /*-----------------------------------*\
+   * #HEADER
+  \*-----------------------------------*/
+
+  
+  .helpline-box .icon-box {
+    background: var(--bright-navy-blue);
+    padding: 13px;
+    border-radius: 50%;
+    color: var(--white);
+  }
+  
+  .helpline-box .icon-box ion-icon { --ionicon-stroke-width: 40px; }
+
+
+  .header-top .logo { margin-inline: auto; }
+  
+  .header-top .logo img { max-width: 100px; }
+
+  .search-btn,
+  .nav-open-btn {
+    font-size: 30px;
+    color: inherit;
+   }
+  .search-btn { 
+    font-size:30px !important; 
+
+}
+  
+  .header-bottom { 
+    border-bottom: 1px solid hsla(0, 0%, 100%, 0.1); 
+    padding-bottom: 30px; /* Increase this value to make the section longer */
+    position: relative; /* Makes it a reference for absolute positioning of children */
+    height: auto; /* Or set a specific height */
+    width: 100%;
+    overflow: visible; /* Allows children to overflow */
+
+}
+  
+  .header-bottom .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-block: 15px;
+  }
+  
+  .header .btn { 
+    --padding: 4px 20px; 
+    margin-top: -3px;
+  }
+  
+  .navbar-link:is(:hover, :focus) { color: var(--bright-navy-blue); }
+  
+  
+  .navbar-link, .social-link, .btn-primary{
+    position: relative;
+    z-index: 2; /* Higher than the overlay*/
+  }
+
+
+  /*-----------------------------------*\
+   * #MEDIA QUERIES
+  \*-----------------------------------*/
+  
+  /**
+   * responsive for larger than 580px screen
+   */
+  
+  
+  
+  @media (min-width: 768px) {
+  
+    /**
+     * CUSTOM PROPERTY
+     */
+  
+    :root {
+  
+      /**
+       * typography
+       */
+  
+      --fs-5: 15px;
+  
+    }
+  
+  
+  
+    /**
+     * REUSED STYLE
+     */
+  
+    .container { 
+      max-width: 800px; }
+  
+    .section-text {
+      max-width: 60ch;
+      margin-inline: auto;
+    }
+  
+    /**
+     * HEADER
+     */
+  
+    .helpline-box {
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      gap: 10px;
+    }
+  
+    .helpline-box .wrapper {
+      display: block;
+      color: var(--white);
+      font-size: var(--fs-6);
+    }
+  
+    .social-list { gap: 10px; }
+
+  
+  
+    /**
+     * HEADER
+     */
+  
+    .header.active .header-top {
+      position: unset;
+      background: unset;
+    }
+  
+    .nav-open-btn,
+    .navbar-top { display: none; }
+  
+  
+    .header.active .header-bottom {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      background: var(--white);
+      color: var(--onyx);
+      box-shadow: 0 2px 5px hsla(0, 0%, 0%, 0.08);
+      transition: var(--transition);
+    }
+  
+    .header-bottom .container { padding-block: 0; }
+  
+    .header .navbar { all: unset; }
+  
+    .navbar-link {
+      color: var(--white);
+      font-size: var(--fs-4);
+      font-weight: var(--fw-500);
+      text-transform: uppercase;
+      transition: var(--transition);
+      padding: 20px 15px;
+    }
+  
+    .header.active .navbar-link { color: var(--onyx); }
+  
+    .header.active .navbar-link:is(:hover, :focus) { color: var(--bright-navy-blue); }
+  
+    .header.active .social-link {
+      color: var(--onyx);
+      border-color: hsla(0, 0%, 0%, 0.15);
+    }
+    
+    .result-card {
+        width: 100%; /* Full width for smaller screens */
+    }
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: #f8f9fa;
+    color: #333;
+    margin: 0;
+    padding: 0;
+}
+
+/* Header Styles */
+.header {
+    position: relative;
+    background: url("../images/bannercropped.jpg") no-repeat center center;
+    background-size: cover;
+    color: #fff;
+    padding: 2px 0; /* Adjust padding as needed */
+    display: flex;
+    flex-direction: column;
+    z-index: 1; /* Ensures the header is below the search bar */
+
+}
+
+
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: hsla(0, 0%, 0%, 0.7);
+    z-index: 1; /* Ensure overlay is on top */
+}
+
+.header-top {
+    display: flex; /* Use flexbox for layout */
+    justify-content: space-between; /* Space between helpline and logo */
+    align-items: center; /* Center items vertically */
+    padding: 15px 20px; /* Add some padding */
+    z-index: 2; /* Keep the header content above the overlay */
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);  /* Adjust opacity for subtlety */
+
+}
+
+.header-top .logo img {
+    max-width: 180px; /* Adjust the size as necessary */
+    height: auto; /* Maintain aspect ratio */
+}
+
+.header-top .container {
+    display: flex;                   /* Use flexbox */
+    align-items: center;            /* Center items vertically */
+    justify-content: space-between; /* Distribute space between elements */
+    width: 100%;       /* Center items vertically */
+}
+
+
+
+.left, .center, .right {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+}
+
+.left {
+    justify-content: flex-start;
+}
+
+.right {
+    justify-content: flex-end;
+}
+
+/*
+{{ url_for('static', filename='images/logo.svg') }}
+*/
+
+
+.container {
+    max-width: 1200px; /* Adjust as needed */
+    margin: 0 auto;
+    padding: 0 15px;
+}
+
+.helpline-title,
+.helpline-number {
+    margin: 0;
+}
+
+.logo {
+    margin: 0 1 auto;
+    position: relative;              /* Ensures the logo can be adjusted relative to its normal position */
+    z-index: 2;                 /* Centers the logo within the available space */
+}
+
+.logo img {
+    height: 60px; /* Adjust size as necessary */
+}
+
+.header-btn-group {
+    display: flex;
+    align-items: center;
+    margin-top: 10px; /* Space between helpline and buttons */
+}
+
+.header-btn-group button {
+    background: none;
+    border: none;
+    color: #fff;
+    margin-left: 15px; /* Spacing between buttons */
+    font-size: 24px; /* Adjust as necessary */
+}
+
+/* Social Media Styles */
+.social-list {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    margin: 0;  /* Remove any margin if there is extra space */
+    padding: 0;  /* Remove padding */
+}
+
+.social-list li {
+    margin: 0 3px; /* Spacing between social icons */
+}
+
+.social-link {
+    color: var(--white);
+    padding: 8px;
+    border: 1px solid hsla(0, 0%, 100%, 0.3);
+    border-radius: 50%;
+    font-size: 15px;
+    transition: var(--transition);
+  }
+
+.social-link:is(:hover, :focus) { background: hsla(0, 0%, 100%, 0.2); }
+
+
+/* Navbar Styles */
+
+
+.navbar-list {
+    display: flex;
+    justify-content: center;
+    list-style: none; /* Remove default list styling */
+    padding: 0;
+    margin: 0; /* Remove default margin */
+}
+
+.navbar-list li {
+    margin: 0 5px; /* Spacing between navbar links */
+}
+
+
+/* Button Styles */
+.btn-primary {
+    background-color: var(--bright-navy-blue); /* Primary button color */
+    color: #fff; /* Button text color */
+    border: none; /* No border */
+    padding: 10px 20px; /* Button padding */
+    cursor: pointer; /* Pointer cursor */
+    border-radius: 20px; /* Rounded corners */
+    margin-top: 10px; /* Spacing above button */
+}
+
+.btn-primary:hover {
+    background-color: #003366; /* Darker shade on hover */
+}
+
+/* Search Summary Styles */
+.search-summary {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #fff;  /* White background or any other color based on your design */
+  box-shadow: 0 0px 3px rgba(0, 0, 0, 0.1);  /* Subtle shadow for depth */
+  margin-bottom: 20px;  /* Space below the search bar */
+  position: absolute;
+  bottom: -35px; /* Adjust this value to move the search bar up or down to overlap */
+  left: 0;
+  right: 0;
+  margin: 0 auto; /* Centers the search bar */
+  width: 85%; /* Adjust width as needed */
+  background: black; /* Background color for the search bar */
+  background: rgba(0, 0, 0, 0.3);
+  z-index: 2; /* Ensures the search bar is above the header */
+  padding: 8px 10px; /* Padding inside the search bar */
+  border-radius: 15px; /* Optional: rounded corners */
+  max-width: 1100px; /* Maximum width it can expand to */
+
+}
+
+.search-summary input,
+.search-summary select {
+  padding: 12px 10px;  /* Comfortable padding within the inputs */
+  margin-right: 10px;  /* Space between the elements */
+  border: 1px solid #ccc;  /* Subtle border style */
+  border-radius: 15px;  /* Consistent rounded corners */
+  background-color: #f9f9f9;  /* Slightly off-white background for the inputs */
+}
+
+.search-summary button {
+  padding: 13px 16px;  /* Sufficient padding inside the button */
+  background-color:#ffc107;  /* Button color */
+  color: white;  /* Text color */
+  border: none;  /* No border */
+  border-radius: 15px;  /* Rounded corners */
+  cursor: pointer;  /* Pointer on hover */
+  transition: background-color 0.3s;  /* Smooth transition for hover effect */
+}
+
+.search-summary button:hover {
+  background-color: #003366;  /* Darker shade on hover */
+}
+
+
+
+
+
+/* Tab Styles */
+/* Tab Styles */
+.tabs {
+  display: flex;
+  justify-content: space-around; /* Center the tabs */
+  margin-bottom: 0;
+  margin-top: 50px;
+  background-color: #f0f0f0; /* Background with some opacity */
+  padding: 5px; /* Padding around the tabs */
+  padding-bottom: 0; /* Optional: reduce padding if any */
+  border-top-left-radius: 8px; /* Adjust the value as needed */
+  border-top-right-radius: 8px; /* Adjust the value as needed */
+}
+
+.tab {
+  background: #fff; /* Light background color */
+  border: 0.5px solid #f0f0f0;
+  padding: 8px 10px; /* Adjust padding */
+  cursor: pointer;
+  margin-right: 5px; /* Space between tabs */
+  font-weight: bold;
+  font-size: 15px; /* Font size for tab text */
+  transition: background-color 0.3s ease, border 0.3s ease;
+  flex: 1;
+  width: 33.33%; /* Each tab takes one-third of the total width */
+  text-align: center;
+  border-top-left-radius: 8px; /* Adjust the value as needed */
+  border-top-right-radius: 8px; /* Adjust the value as needed */
+}
+
+.tab.active {
+  background-color: #f0f0f0; /* Light grey background for the active tab */
+  z-index: 1; /* Ensure the active tab appears above other elements */
+  box-shadow: none;
+  border: none; /* Ensure no border is applied */
+  outline: none; /* Remove any outline */
+}
+
+.tab:hover {
+  background-color: #f0f0f0; /* Hover color for tabs */
+  color: #fff; /* Change text color on hover */
+}
+
+
+/* Results Section Styles */
+.results-section {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    padding: 0px;
+    background-color: #f0f0f0; /* Match the background of the wrapper */
+    border-radius: 10px;
+}
+
+.result-card {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(201, 192, 192, 0.1);
+    overflow: hidden;
+    position: relative;
+    width: calc(33.33% - 15px); /* Makes the card take up more space */
+    margin: 5px; /* Less space between each card */
+    margin-bottom: 20px;
+    transition: transform 0.3s ease-in-out;
+    border: 10px solid #fff;
+}
+
+.results-wrapper {
+  background-color: #f0f0f0; /* Light grey background */
+  padding: 10px;
+  padding-bottom: 0;
+  border-radius: 0; /* Rounded corners */
+  margin-top: 0; /* Space below the search summary */
+}
+
+
+.result-card img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 8px; /* Add this line to give the image rounded corners */
+}
+
+.card-content {
+    padding: 15px;
+    padding-bottom: 60px; /* Add extra bottom padding to make room for the button */
+
+}
+
+.card-content h3 {
+  font-size: 20px; /* Big bold font for hotel name */
+  font-weight: bold;
+  margin: 10px 0 5px;
+  color: #000;
+}
+
+.card-content .location {
+  font-size: 16px; /* Blue regular, smaller than hotel name */
+  color: #007bff;
+  margin-bottom: 8px;
+}
+
+.card-content .room-info {
+  font-size: 14px; /* Black, smaller than location */
+  color: #666;
+  margin-bottom: 8px;
+}
+
+.card-content .description {
+  font-size: 13px; /* Make the font size smaller */
+  color: #666;     /* Optional: Change the color if you want */
+  line-height: 1.4; /* Adjust line height for readability */
+  margin-bottom: 10px; /* Add some space below the description if needed */
+}
+
+.card-content .category {
+  font-size: 15px; /* Slightly smaller font size */
+  color: #007bff; /* Blue color to match other elements */
+  margin-bottom: 8px; /* Add space below the category */
+}
+
+
+
+.room-info-and-price {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.room-info {
+  font-size: 14px;
+  color: #333;
+  margin-right: 10px; /* Space between text and button */
+  line-height: 1.4;
+  max-width: calc(100% - 120px); /* Adjust to ensure it doesn't overlap with the button */
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.rating-badge {
+    background-color: #ffc107;
+    padding: 12px;
+    border-radius: 5px;
+    font-weight: bold;
+    float: right;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+}
+
+.price-button,
+.more-info-button {
+    background-color: var(--blue-ncs);
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-weight: bold;
+    position: absolute;
+    bottom: 15px;
+    right: 15px;
+    cursor: pointer;
+}
+
+.more-info-button:hover {
+  background-color: #0056b3;
+}
+
+.price-button:hover {
+  background-color: #0056b3; /* Darker blue on hover */
+}
+
+.price-point {
+  font-size: 14px;
+  color: #555;
+  margin-top: 5px;
+  margin-bottom: 10px;
+}
+
+/*-----------------------------------*\
+ * #FOOTER
+\*-----------------------------------*/
+
+.footer-top {
+  background: var(--gunmetal);
+  padding-block: var(--section-padding);
+  color: var(--gainsboro);
+}
+
+.footer-brand { margin-bottom: 30px; }
+
+.footer-brand img { width: 180px; }
+
+.footer-brand .logo { margin-bottom: 20px; }
+
+.footer-text {
+  font-size: var(--fs-5);
+  line-height: 1.7;
+}
+
+.footer-contact { margin-bottom: 30px; }
+
+.footer-form .input-field {
+  background: var(--white);
+  font-size: var(--fs-5);
+  padding: 15px 20px;
+  border-radius: 100px;
+  margin-bottom: 10px;
+}
+
+.footer-form .btn { width: 100%; }
+
+.footer-bottom {
+  --gunmetal: hsl(205, 36%, 17%);
+  background: var(--gunmetal);
+  padding-block: 20px;
+  text-align: center;
+}
+
+.footer-bottom-list {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 21px;
+}
+
+.footer-bottom-list > li { position: relative; }
+
+.footer-bottom-list > li:not(:last-child)::after {
+  content: "";
+  position: absolute;
+  top: 3px;
+  right: -10px;
+  bottom: 3px;
+  width: 1px;
+  background: hsla(0, 0%, 100%, 0.2);
+}
+
+.footer-bottom-link {
+  color: var(--gainsboro);
+  font-size: var(--fs-7);
+  transition: var(--transition);
+}
+
+.footer-bottom-link:is(:hover, :focus) { color: var(--white); }
+
+.footer .container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 30px;
+  margin-bottom: 0;
+}
+
+.footer-form { grid-column: span 2; }
+
+.footer-bottom { text-align: left; }
+
+.copyright { margin-bottom: 0; }
+
+.footer-bottom-list { justify-content: flex-end; }
+
+
+.footer-form .input-field { margin-bottom: 0; }
+
+.footer-form .btn { width: max-content; }
+.footer-top .container {
+  grid-template-columns: repeat(3, 1fr);
+  gap: 50px;
+}
+
+.footer-form { grid-column: unset; }
+
+.form-wrapper { flex-direction: column; }
+
+.footer-form .btn { width: 100%; }
+
+.btn-secondary { 
+  border-color: var(--white);
+  background-color: var(--gunmetal);
+  border-radius: 50px; 
+  padding: 12px;
+}
+
+.btn-secondary:is(:hover, :focus) { background: hsla(0, 0%, 100%, 0.1); }
+
+.contact-title {
+  position: relative;
+  font-family: var(--ff-montserrat);
+  font-weight: var(--fw-500);
+  margin-bottom: 30px;
+}
+
+.contact-title::after {
+  content: "";
+  position: absolute;
+  bottom: -10px;
+  left: 0;
+  width: 50px;
+  height: 2px;
+  background: var(--bright-navy-blue);
+}
+
+.contact-text {
+  font-size: var(--fs-5);
+  margin-bottom: 15px;
+  max-width: 200px;
+  color: white; 
+}
+
+.contact-item {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.contact-item ion-icon { --ionicon-stroke-width: 40px; }
+
+.contact-link,
+address {
+  font-style: normal;
+  color: var(--gainsboro);
+  font-size: var(--fs-5);
+}
+
+.contact-link:is(:hover, :focus) { color: var(--white); }
+
+.form-text {
+  font-size: var(--fs-5);
+  margin-bottom: 20px;
+}
+
+.form-wrapper {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 20px;
+}
+
+.form-wrapper { flex-direction: column; }
+
+.copyright {
+  color: var(--gainsboro);
+  font-size: var(--fs-5);
+  margin-bottom: 10px;
+}
+
+.copyright a {
+  color: inherit;
+  display: inline-block;
+}
+
+.copyright a:is(:hover, :focus) { color: var(--white); }
+
+.copyright { margin-bottom: 0; }
+
+/*contact page*/
+.btn-submit {
+  background-color: #000;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  width: 100%;
+  font-weight: 600;
+  letter-spacing: 1px;
+}
+
+.btn-submit:hover {
+  background-color: #333;
+  color: #fff;
+}
+
+.form-control {
+  border: none;
+  border-bottom: 1px solid #333;
+  background-color: var(--cultured); /* Matches the page background color */
+  border-radius: 0;
+  box-shadow: none;
+  color: var(--black-coral); /* Sets the text color */
+
+}
+
+.form-control:focus {
+  background-color: var(--cultured); /* Matches the page background color */
+  outline: none !important; /* Removes the default focus outline */
+  border-color: transparent; /* Optional: can remove any change in border on focus */
+  box-shadow: none;  /* Removes any shadow outline */
+
+}
+
+/*gotop*/
+
+/*-----------------------------------*\
+ * #GO TO TOP
+\*-----------------------------------*/
+
+.go-top {
+  position: fixed;
+  bottom: 15px;
+  right: 15px;
+  width: 35px;
+  height: 35px;
+  background: var(--bright-navy-blue);
+  color: var(--white);
+  display: grid;
+  place-items: center;
+  font-size: 18px;
+  border-radius: 6px;
+  box-shadow: 0 1px 3px hsla(0, 0%, 0%, 0.5);
+  opacity: 0;
+  transform: translateY(10px);
+  visibility: hidden;
+  transition: var(--transition);
+}
+
+.go-top.active {
+  opacity: 0.8;
+  transform: translateY(0);
+  visibility: visible;
+}
+
+.go-top:is(:hover, :focus) { opacity: 1; }
+
+
+  }

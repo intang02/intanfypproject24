@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ScholarTrips - Budget Travel for Students</title>
+
+  <!-- 
+    - favicon
+  -->
+  <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.svg') }}" type="image/svg+xml">
+
+  <!-- 
+    - custom css link
+  -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
+  <!-- 
+    - google font link
+  -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700;800&family=Poppins:wght@400;500;600;700&display=swap"
+    rel="stylesheet">
+</head>
+
+<body id="top">
+
+  <!-- 
+    - #HEADER
+  -->
+
+  <header class="header" data-header>
+
+    <div class="overlay" data-overlay></div>
+    <div class="header-top">
+      <div class="container">
+
+        <a href="tel:+01123456790" class="helpline-box">
+
+          <div class="icon-box">
+            <ion-icon name="call-outline"></ion-icon>
+          </div>
+
+          <div class="wrapper">
+            <p class="helpline-title">For Further Inquiries:</p>
+            <p class="helpline-number">(+60) 96-699002</p>
+          </div>
+        </a>
+
+        <a href="#" class="logo">
+          <img src="./static/images/logo.svg" alt="Tourly logo">
+        </a>
+
+        <div class="header-btn-group">
+
+          <button class="search-btn" aria-label="Search">
+            <ion-icon name="search"></ion-icon>
+          </button>
+
+          <button class="nav-open-btn" aria-label="Open Menu" data-nav-open-btn>
+            <ion-icon name="menu-outline"></ion-icon>
+          </button>
+
+        </div>
+
+      </div>
+    </div>
+
+    <div class="header-bottom">
+      <div class="container">
+
+        <ul class="social-list">
+          <li>
+            <a href="#" class="social-link">
+              <ion-icon name="logo-facebook"></ion-icon>
+            </a>
+          </li>
+          <li>
+            <a href="#" class="social-link">
+              <ion-icon name="logo-twitter"></ion-icon>
+            </a>
+          </li>
+          <li>
+            <a href="#" class="social-link">
+              <ion-icon name="logo-youtube"></ion-icon>
+            </a>
+          </li>
+        </ul>
+
+        <nav class="navbar" data-navbar>
+          <div class="navbar-top">
+            <a href="#" class="logo">
+              <img src="./static/images/logo-blue.svg" alt="Tourly logo">
+            </a>
+            <button class="nav-close-btn" aria-label="Close Menu" data-nav-close-btn>
+              <ion-icon name="close-outline"></ion-icon>
+            </button>
+          </div>
+          <ul class="navbar-list">
+            <li>
+              <a href="" class="navbar-link" data-nav-link>home</a>
+            </li>
+            <li>
+              <a href="#about-us" class="navbar-link" data-nav-link>about us</a>
+            </li>
+            <li>
+              <a href="#popdestination" class="navbar-link" data-nav-link>destination</a>
+            </li>
+            <li>
+              <a href="#contact" class="navbar-link" data-nav-link>contact us</a>
+            </li>
+          </ul>
+        </nav>
+
+        <button class="btn btn-primary" type="button">Log In</button>
+
+      </div>
+    </div>
+
+  </header>
+
+  <main>
+    <article>
+
+      <!-- 
+        - #HERO
+      -->
+      <section class="hero" id="home">
+        <div class="container">
+          <h1 class="h1 hero-title">Where to go next?</h1>
+
+          <form action="/search" method="post" class="tour-search-form" id="searchForm">
+            <div class="input-wrapper">
+              <input type="text" id="destinationInput" name="destination" onfocus="showSuggestions()" oninput="filterSuggestions()" placeholder="Enter Destination" class="input-field">
+
+                <div id="suggestionsList" class="suggestions-list" style="display: none;">
+                  <ul>
+                      <li onclick="selectSuggestion('Penang')">Penang</li>
+                      <li onclick="selectSuggestion('Langkawi')">Langkawi</li>
+                      <li onclick="selectSuggestion('Cameron Highlands')">Cameron Highlands</li>
+                      <li onclick="selectSuggestion('Melaka')">Melaka</li>
+                      <li onclick="selectSuggestion('Kuala Lumpur')">Kuala Lumpur</li>
+                  </ul>
+              </div>
+              </div>
+        
+            <div class="input-wrapper">
+                <input id="datePicker" name="dates" type="text" placeholder="Select Date Range" class="input-field">
+                <input id="checkin_date" name="checkin_date" type="hidden">
+                <input id="checkout_date" name="checkout_date" type="hidden">
+            </div>
+        
+            <div class="pax-dropdown">
+                <input type="text" name="pax" id="pax-input" readonly value="2 adults, 1 room" class="input-field">
+                <div class="pax-container">
+                    <label for="adults">Adults</label>
+                    <div class="pax-control">
+                        <button type="button" id="adult-decrease">-</button>
+                        <input type="number" id="adults" value="2" min="1">
+                        <button type="button" id="adult-increase">+</button>
+                    </div>
+        
+                    <label for="rooms">Rooms</label>
+                    <div class="pax-control">
+                        <button type="button" id="room-decrease">-</button>
+                        <input type="number" id="rooms" value="1" min="1">
+                        <button type="button" id="room-increase">+</button>
+                    </div>
+                    <button id="done-button">Done</button>
+                </div>
+            </div>
+        
+            <div class="input-group">
+                <input type="text" name="budget" id="budgetInput" value="RM 50" readonly class="budget-input-box">
+                <div id="budgetPickerContainer" class="budget-picker-container">
+                    <input type="range" id="budgetRange" min="50" max="2000" step="1" value="0" class="budget-range-picker">
+                    <span id="budgetValue" class="budget-value">RM 0</span>
+                </div>
+            </div>
+        
+            <button id="searchButton" type="submit">Search</button>
+        </form>
+        
+
+        </div>
+      </section>
+
+      <!-- About Us Section -->
+      <section class="about-us" id="about-us">
+        <div class="container">
+          <div class="about-content">
+            <div class="about-text">
+              <h2 class="h2 section-title">About Us</h2>
+              <p class="section-text">
+                Welcome to Tourly! We are dedicated to helping you find the best travel experiences tailored to your budget. Our platform provides personalized recommendations for accommodations, restaurants, and attractions to ensure you have an unforgettable journey.
+              </p>
+              <p class="section-text">
+                We strive to enhance your travel planning by offering a user-friendly interface, curated listings, and excellent customer service. Whether you are a solo traveler, a couple, or a family, we have something for everyone.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 
+        - #POPULAR
+      -->
+      <!-- HTML Structure for Popular Destination Section -->
+      
+      <section class="popular" id="popdestination">
+        <div class="container popular-container">
+          <div class="popular-text">
+            <p class="section-subtitle">Uncover Place</p>
+            <h2 class="h2 section-title">Popular Destination</h2>
+            <p class="section-text">
+              Visitors can explore picturesque landscapes, discover hidden gems, and enjoy a blend of natural beauty 
+              and cultural charm. 
+              It's the perfect spot for adventure seekers and those looking to unwind in a captivating environment.
+            </p>
+          </div>
+          <ul class="popular-list">
+            <li class="popular-card">
+              <figure class="card-img">
+                <img src="./static/images/klcc.jpg" alt="Kuala Lumpur" loading="lazy">
+              </figure>
+              <div class="card-content">
+                <div class="card-rating">
+                  <ion-icon name="star"></ion-icon>
+                  <ion-icon name="star"></ion-icon>
+                  <ion-icon name="star"></ion-icon>
+                  <ion-icon name="star"></ion-icon>
+                  <ion-icon name="star"></ion-icon>
+                </div>
+                <p class="card-subtitle"><a href="#">Petronas Twin Towers</a></p>
+                <h3 class="h3 card-title"><a href="#">Kuala Lumpur</a></h3>
+                <p class="card-text">Iconic 452m tall Kuala Lumpur skyscrapers, symbolizing modernization.</p>
+              </div>
+            </li>
+            <li class="popular-card">
+              <figure class="card-img">
+                  <img src="./static/images/colmar.jpg" alt="Berjaya Hills, Pahang" loading="lazy">
+              </figure>
+              <div class="card-content">
+                  <div class="card-rating">
+                      <ion-icon name="star"></ion-icon>
+                      <ion-icon name="star"></ion-icon>
+                      <ion-icon name="star"></ion-icon>
+                      <ion-icon name="star"></ion-icon>
+                      <ion-icon name="star"></ion-icon>
+                  </div>
+                  <p class="card-subtitle"><a href="#">Colmar Tropicale</a></p>
+                  <h3 class="h3 card-title"><a href="#">Berjaya Hills</a></h3>
+                  <p class="card-text">French-themed resort in Pahang, offering picturesque village charm.</p>
+              </div>
+            </li>
+            <li class="popular-card">
+              <figure class="card-img">
+                  <img src="./static/images/kundasang.jpg" alt="Kundasang, Sabah" loading="lazy">
+              </figure>
+              <div class="card-content">
+                  <div class="card-rating">
+                      <ion-icon name="star"></ion-icon>
+                      <ion-icon name="star"></ion-icon>
+                      <ion-icon name="star"></ion-icon>
+                      <ion-icon name="star"></ion-icon>
+                      <ion-icon name="star"></ion-icon>
+                  </div>
+                  <p class="card-subtitle"><a href="#">Desa Dairy Farm</a></p>
+                  <h3 class="h3 card-title"><a href="#">Kundasang</a></h3>
+                  <p class="card-text">Kundasang's scenic farm, known for fresh milk production.</p>
+              </div>
+            </li>
+          </ul>
+          <button class="btn btn-primary">More Destinations</button>
+        </div>
+      </section>
+    
+
+
+      <!-- 
+        - #CTA
+      -->
+      <section class="cta" id="contact">
+        <div class="container">
+          <div class="cta-content">
+            <h2 class="h2 section-title">Ready For Unforgettable Travel? Remember Us!</h2>
+            <p class="section-text">
+              With our dedicated team by your side, discover the hidden gems of 
+              the world while enjoying budget-friendly options that won't compromise on 
+              quality
+            </p>
+          </div>
+          <button class="btn btn-secondary" onclick="window.location.href='contact.html'">Contact Us!</button>
+        </div>
+      </section>
+
+    </article>
+  </main>
+
+  <!-- 
+    - #FOOTER
+  -->
+  <footer class="footer">
+    <div class="footer-top">
+      <div class="container">
+        <div class="footer-brand">
+          <a href="#" class="logo">
+            <img src="./static/images/logo.svg" alt="Tourly logo">
+          </a>
+          <p class="footer-text">
+            Your trusted partner in unforgettable journeys, offering budget-friendly insights,
+            and personalized recommendations to make every adventure extraordinary without breaking the bank.
+          </p>
+        </div>
+
+        <div class="footer-contact">
+          <h4 class="contact-title">Contact Us</h4>
+          <p class="contact-text">
+            Feel free to reach us!
+          </p>
+          <ul>
+            <li class="contact-item">
+              <ion-icon name="call-outline"></ion-icon>
+              <a href="tel:+01123456790" class="contact-link">(+60) 96-6699002</a>
+            </li>
+            <li class="contact-item">
+              <ion-icon name="mail-outline"></ion-icon>
+              <a href="mailto:info.scholartrips.com" class="contact-link">info.tourly.com</a>
+            </li>
+            <li class="contact-item">
+              <ion-icon name="location-outline"></ion-icon>
+              <address>2130 Kuala Lumpur, Malaysia</address>
+            </li>
+          </ul>
+        </div>
+
+        <div class="footer-form">
+          <p class="form-text">
+            Subscribe to our newsletter for more updates!
+          </p>
+          <form action="" class="form-wrapper">
+            <input type="email" name="email" class="input-field" placeholder="Enter Your Email" required>
+            <button type="submit" class="btn btn-secondary">Subscribe</button>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <div class="container">
+        <p class="copyright">
+          &copy; 2022 <a href="">codewithsadee</a>. All rights reserved
+        </p>
+        <ul class="footer-bottom-list">
+          <li>
+            <a href="#" class="footer-bottom-link">Privacy Policy</a>
+          </li>
+          <li>
+            <a href="#" class="footer-bottom-link">Term & Condition</a>
+          </li>
+          <li>
+            <a href="#" class="footer-bottom-link">FAQ</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </footer>
+
+  <!-- 
+    - #GO TO TOP
+  -->
+  <a href="" class="go-top" data-go-top>
+    <ion-icon name="chevron-up-outline"></ion-icon>
+  </a>
+
+ 
+
+  <!-- 
+    - ionicon link
+  -->
+  <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+
+  <!-- 
+    date link
+  -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+
+
+  <script>
+    document.getElementById('searchForm').addEventListener('submit', function (event) {
+      // Get the date range value
+      var dateRange = document.getElementById('datePicker').value;
+
+      // Log to check if JavaScript is running
+      console.log("Form is being submitted...");
+      console.log("Date range selected: ", dateRange);
+
+      if (dateRange) {
+        // Split the human-readable date range
+        var dates = dateRange.split(' to ');
+
+        if (dates.length === 2) {
+          // Parse the check-in and check-out dates into YYYY-MM-DD format
+          var checkinDate = new Date(dates[0]).toISOString().slice(0, 10);  // YYYY-MM-DD format
+          var checkoutDate = new Date(dates[1]).toISOString().slice(0, 10); // YYYY-MM-DD format
+
+          // Log the parsed dates
+          console.log("Parsed Check-in Date: ", checkinDate);
+          console.log("Parsed Check-out Date: ", checkoutDate);
+
+          // Create hidden inputs for check-in and check-out dates
+          var dateInputField = document.createElement('input');
+          dateInputField.type = 'hidden';
+          dateInputField.name = 'checkin_date';
+          dateInputField.value = checkinDate;
+
+          var checkoutInputField = document.createElement('input');
+          checkoutInputField.type = 'hidden';
+          checkoutInputField.name = 'checkout_date';
+          checkoutInputField.value = checkoutDate;
+
+          // Append hidden inputs to the form
+          this.appendChild(dateInputField);
+          this.appendChild(checkoutInputField);
+        } else {
+          console.log("Error: Could not split date range properly.");
+        }
+      } else {
+        console.log("Error: Date range is empty.");
+      }
+    });
+  </script>
+
+  <!-- 
+    prevent multiple form submission
+  -->
+  <script>
+    document.getElementById('searchForm').addEventListener('submit', function () {
+      document.getElementById('searchButton').disabled = true; // Disable the button
+      setTimeout(function () { // Enable after 5 seconds, adjust time as needed
+        document.getElementById('searchButton').disabled = false;
+      }, 5000);
+    });
+  </script>
+
+  <script>
+    document.getElementById('searchForm').addEventListener('submit', function (event) {
+      event.preventDefault();
+      var formData = new FormData(this);
+      axios.post('/search', formData, { timeout: 10000 })
+        .then(function (response) {
+          console.log('Search initiated:', response.data);
+          const session_id = response.data.session_id;
+          // Now call the results endpoint
+          fetchResults(session_id);
+        })
+        .catch(function (error) {
+          console.error('Error submitting form:', error);
+        });
+    });
+
+    // Example JavaScript to fetch results using session_id
+    function fetchResults(session_id) {
+      fetch(`/results/${session_id}`)
+        .then(response => response.json())
+        .then(data => {
+          console.log(data);
+          if (data.ready) {
+            displayResults(data.results);
+          } else {
+            setTimeout(() => fetchResults(session_id), 5000); // Poll every 5 seconds
+          }
+        })
+        .catch(error => console.error('Error fetching results:', error));
+    }
+
+    function displayResults(results) {
+      const resultsContainer = document.getElementById('results');
+      resultsContainer.innerHTML = ''; // Clear previous results
+      results.forEach(result => {
+        const content = `<div>
+            <h4>${result.name}</h4>
+            <p>${result.location} - ${result.price}</p>
+            <p>Rating: ${result.rating}</p>
+          </div>`;
+        resultsContainer.innerHTML += content;
+      });
+    }
+  </script>
+
+
+
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+<script>
+  // Handle the search form submission
+  document.getElementById('searchForm').addEventListener('submit', async function(event) {
+      event.preventDefault(); // Prevent the default form submission
+
+      // Collect form data
+      const formData = new FormData(this);
+
+      // Disable the submit button to prevent multiple submissions
+      document.getElementById('searchButton').disabled = true;
+
+      // Show loading spinner
+      document.getElementById('loadingSpinner').style.display = 'block';
+
+      try {
+          // Send the search data to the server
+          const response = await fetch('/search', {
+              method: 'POST',
+              body: formData,
+          });
+
+          if (response.ok) {
+              // If the response is successful, redirect to the /results page
+              const { session_id, destination } = await response.json();
+              window.location.href = `/results/${session_id}?destination=${encodeURIComponent(destination)}`;
+          } else {
+              // Bypass error handling and proceed to the results page
+              const session_id = formData.get('session_id') || 'fallback_session_id';
+              const destination = formData.get('destination');
+              window.location.href = `/results/${session_id}?destination=${encodeURIComponent(destination)}`;
+          }
+      } catch (error) {
+          // Log error to the console but still proceed to results page
+          console.error('Error occurred, bypassing to results page:', error);
+          const session_id = formData.get('session_id') || 'fallback_session_id';
+          const destination = formData.get('destination');
+          window.location.href = `/results/${session_id}?destination=${encodeURIComponent(destination)}`;
+      } finally {
+          // Enable the submit button after completion
+          document.getElementById('searchButton').disabled = false;
+          // Hide the loading spinner
+          document.getElementById('loadingSpinner').style.display = 'none';
+      }
+  });
+</script>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+      // Select elements
+      const doneButton = document.getElementById('done-button');
+      const paxContainer = document.querySelector('.pax-container');
+
+      // Event listener for the "Done" button
+      doneButton.addEventListener('click', function(event) {
+          event.preventDefault(); // Prevent any default behavior like submitting a form
+          
+          // Close the pax container
+          paxContainer.style.display = 'none';
+      });
+
+      // Event listener to open pax container when needed (e.g. when clicking on the pax input)
+      const paxInput = document.getElementById('pax-input');
+      paxInput.addEventListener('click', function() {
+          paxContainer.style.display = 'block';
+      });
+
+      // Optional: Close the pax container if clicking outside of it
+      document.addEventListener('click', function(event) {
+          if (!paxContainer.contains(event.target) && !paxInput.contains(event.target)) {
+              paxContainer.style.display = 'none';
+          }
+      });
+  });
+</script>
+
+<script>
+
+function showSuggestions() {
+    document.getElementById('suggestionsList').style.display = 'block';
+    filterSuggestions(); // Optionally call this to reset suggestions on focus
+}
+
+function hideSuggestions() {
+    document.getElementById('suggestionsList').style.display = 'none';
+}
+
+function filterSuggestions() {
+    const input = document.getElementById('destinationInput').value.toLowerCase();
+    const suggestions = document.querySelectorAll('#suggestionsList ul li');
+
+    suggestions.forEach(suggestion => {
+        if (suggestion.textContent.toLowerCase().includes(input) && input !== "") {
+            suggestion.style.display = 'block'; // Show matched suggestions
+        } else {
+            suggestion.style.display = 'none'; // Hide unmatched suggestions
+        }
+    });
+}
+
+function selectSuggestion(value) {
+    document.getElementById('destinationInput').value = value;
+    hideSuggestions();
+}
+
+// Hide suggestions when clicking outside
+document.addEventListener('click', function(event) {
+    if (!event.target.closest('#destinationInput') && !event.target.closest('#suggestionsList')) {
+        hideSuggestions();
+    }
+});
+
+document.addEventListener("DOMContentLoaded", function() {
+    const spinner = document.getElementById("spinner");
+    if (spinner) {
+        spinner.style.display = 'block';
+    }
+});
+
+
+</script>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+<div id="loadingSpinner" style="display: none;">Loading...</div>
+
+<div id="spinner" style="display: none;">Loading...</div>
+
+ <!-- 
+    - custom js link
+  -->
+  <script src="./static/js/script.js"></script>
+
+
+
+</body>
+
+</html>

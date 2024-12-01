@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!DOCTYPE html>
+<html lang="en">
+
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recommendations for Your Trip</title>
+    <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.svg') }}" type="image/svg+xml">
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/results.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+</head>
+
+<body id="top">
+    <!-- Header -->
+    <header class="header" data-header>
+        <div class="overlay" data-overlay></div>
+        <div class="header-top">
+            <div class="container">
+                <div class="left">
+                    <a href="tel:+01123456790" class="helpline-box">
+                        <div class="icon-box">
+                            <ion-icon name="call-outline"></ion-icon>
+                        </div>
+                        <div class="wrapper">
+                            <p class="helpline-title">For Further Inquiries:</p>
+                            <p class="helpline-number">(+60) 96-699002</p>
+                        </div>
+                    </a>
+                </div>
+                <div class="center">
+                    <a href="#" class="logo">
+                        <img src="{{ url_for('static', filename='images/logo.svg') }}" alt="Tourly logo">
+                    </a>
+                </div>
+                <div class="right">
+                    <div class="header-btn-group">
+                        <button class="search-btn" aria-label="Search">
+                            <ion-icon name="search"></ion-icon>
+                        </button>
+                        <button class="nav-open-btn" aria-label="Open Menu" data-nav-open-btn>
+                            <ion-icon name="menu-outline"></ion-icon>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="search-summary">
+                    <input type="text" name="destination" value="{{ destination }}" placeholder="Enter destination">
+                    <input type="text" name="dates" value="{{ checkin_date }} to {{ checkout_date }}" placeholder="Select Date Range">
+                    <input type="text" name="details" value="{{ pax }}" placeholder="Number of adults, number of rooms">
+                    <input type="text" name="budget" value="{{ budget }}" placeholder="Budget">
+                    <button type="submit">Search</button>
+                </div>
+
+            </div>
+        </div>
+    
+        <div class="header-bottom">
+            <div class="container">
+                <ul class="social-list">
+                    <li>
+                        <a href="#" class="social-link">
+                            <ion-icon name="logo-facebook"></ion-icon>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="social-link">
+                            <ion-icon name="logo-twitter"></ion-icon>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="social-link">
+                            <ion-icon name="logo-youtube"></ion-icon>
+                        </a>
+                    </li>
+                </ul>
+    
+                <nav class="navbar" data-navbar>
+                    <ul class="navbar-list">
+                        <li><a href="/" class="navbar-link" data-nav-link>home</a></li>
+                        <li><a href="#about-us" class="navbar-link" data-nav-link>about us</a></li>
+                        <li><a href="#destination" class="navbar-link" data-nav-link>destination</a></li>
+                        <li><a href="#contact" class="navbar-link" data-nav-link>contact us</a></li>
+                    </ul>
+                </nav>
+    
+                <button class="btn btn-primary" type="button">Log In</button>
+            </div>
+        </div>
+    </header>
+    
+    
+    
+
+
+    <!-- Search Summary -->
+    <div class="container">
+        
+        <!-- Tabs for Switching Sections -->
+        <div class="tabs">
+            <button class="tab active" data-target="#stays">Stays</button>
+            <button class="tab" data-target="#attractions">Attractions</button>
+            <button class="tab" data-target="#restaurants">Restaurants</button>
+        </div>
+        
+        <div class="results-wrapper">
+
+            <!-- Stays Section -->
+            <!-- Stays Section -->
+            <div class="results-section" id="stays">
+                {% if results.hotels|length == 0 %}
+                    <p class="no-results">Sorry, no hotels found that match your criteria. Please adjust your budget or search parameters.</p>
+                {% else %}
+                    {% for hotel in results.hotels[:30] %}
+                        <div class="result-card">
+                            <img src="{{ hotel.image_url if hotel.image_url else 'https://via.placeholder.com/300x200' }}" alt="{{ hotel.name }}">
+                            <div class="rating-badge">{{ hotel.rating }}</div>
+                            <div class="card-content">
+                                <h3>{{ hotel.name }}</h3>
+                                <p class="location">{{ hotel.location }}</p>
+                                <div class="room-info-and-price">
+                                    <p class="room-info">{{ hotel.room_info }}</p>
+                                    <a href="{{ hotel.hotel_link }}" target="_blank">
+                                        <button class="price-button">MYR {{ hotel.price }}</button>
+                                    </a>                            
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            </div>
+
+
+            <!-- Attractions Section -->
+            <div class="results-section" id="attractions" style="display: none;">
+                {% for attraction in results.attractions[:30] %}
+                    <div class="result-card">
+                        <img src="{{ attraction.image_url or 'https://via.placeholder.com/300x200' }}" alt="{{ attraction.name }}">
+                        <div class="card-content">
+                            <div class="rating-badge">{{ attraction.number_of_green_bubbles }}</div>
+                            <h3>{{ attraction.name }}</h3>
+                            <p class="category">{{ attraction.category }}</p> <!-- Added category here -->
+                            <p class="description">{{ attraction.description }}</p>
+                            <a href="{{ attraction.place_link }}" target="_blank" class="more-info-button">View More</a>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+            
+
+            <!-- Restaurants Section -->
+            <div class="results-section" id="restaurants" style="display: none;">
+                {% for restaurant in results.restaurants[:30] %}
+                    <div class="result-card">
+                        <img src="{{ restaurant.image_url or 'https://via.placeholder.com/300x200' }}" alt="{{ restaurant.name }}">
+                        <div class="card-content">
+                            <div class="rating-badge">{{ restaurant.number_of_green_bubbles }}</div>
+                            <h3>{{ restaurant.name }}</h3>
+                            <p class="category">{{ restaurant.category }}</p>
+                            <p class="price-point">{{ restaurant.price_point }}</p> <!-- New line for price_point -->
+                            <a href="{{ restaurant.restaurant_url }}" target="_blank" class="more-info-button">View More</a>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+            
+        </div>
+    </div>
+
+    <!-- 
+    - #FOOTER
+  -->
+  <footer class="footer">
+    <div class="footer-top">
+      <div class="container">
+        <div class="footer-brand">
+          <a href="#" class="logo">
+            <img src="{{ url_for('static', filename='images/logo.svg') }}" alt="Tourly logo">
+          </a>
+          <p class="footer-text">
+            Your trusted partner in unforgettable journeys, offering budget-friendly insights,
+            and personalized recommendations to make every adventure extraordinary without breaking the bank.
+          </p>
+        </div>
+
+        <div class="footer-contact">
+          <h4 class="contact-title">Contact Us</h4>
+          <p class="contact-text">
+            Feel free to reach us!
+          </p>
+          <ul>
+            <li class="contact-item">
+              <ion-icon name="call-outline"></ion-icon>
+              <a href="tel:+01123456790" class="contact-link">(+60) 96-6699002</a>
+            </li>
+            <li class="contact-item">
+              <ion-icon name="mail-outline"></ion-icon>
+              <a href="mailto:info.scholartrips.com" class="contact-link">info.tourly.com</a>
+            </li>
+            <li class="contact-item">
+              <ion-icon name="location-outline"></ion-icon>
+              <address>2130 Kuala Lumpur, Malaysia</address>
+            </li>
+          </ul>
+        </div>
+
+        <div class="footer-form">
+          <p class="form-text">
+            Subscribe to our newsletter for more updates!
+          </p>
+          <form action="" class="form-wrapper">
+            <input type="email" name="email" class="input-field" placeholder="Enter Your Email" required>
+            <button type="submit" class="btn btn-secondary">Subscribe</button>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <div class="container">
+        <p class="copyright">
+          &copy; 2022 <a href="">codewithsadee</a>. All rights reserved
+        </p>
+        <ul class="footer-bottom-list">
+          <li>
+            <a href="#" class="footer-bottom-link">Privacy Policy</a>
+          </li>
+          <li>
+            <a href="#" class="footer-bottom-link">Term & Condition</a>
+          </li>
+          <li>
+            <a href="#" class="footer-bottom-link">FAQ</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </footer>
+
+  <!-- 
+    - #GO TO TOP
+  -->
+  <a href="" class="go-top" data-go-top>
+    <ion-icon name="chevron-up-outline"></ion-icon>
+  </a>
+
+  <script>
+    // JavaScript to show/hide the Go Top button based on scroll position
+    const goTopButton = document.querySelector('.go-top');
+
+    window.addEventListener('scroll', () => {
+        if (window.scrollY > 300) {
+            goTopButton.classList.add('active');
+        } else {
+            goTopButton.classList.remove('active');
+        }
+    });
+
+    goTopButton.addEventListener('click', () => {
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth' // Smooth scroll effect
+        });
+    });
+</script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const tabs = document.querySelectorAll('.tab');
+            tabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    tabs.forEach(t => t.classList.remove('active'));
+                    tab.classList.add('active');
+                    document.querySelectorAll('.results-section').forEach(section => section.style.display = 'none');
+                    document.querySelector(tab.dataset.target).style.display = 'flex';
+                });
+            });
+        });
+    </script>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <!-- 
+    - ionicon link
+  -->
+  <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+    <script>
+        async function fetchResults(sessionId) {
+            const spinner = document.getElementById('loadingSpinner');
+            spinner.style.display = 'block'; // Show loading spinner
+
+            try {
+                const response = await fetch(`/results/${sessionId}`);
+                
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+
+                const data = await response.json();
+                spinner.style.display = 'none'; // Hide loading spinner
+
+                if (data.error) {
+                    alert('Error fetching results: ' + data.error);
+                    return;
+                }
+
+                displayResults(data, 'accommodations', 'hotels');
+                displayResults(data, 'attractions', 'attractions');
+                displayResults(data, 'restaurants', 'restaurants');
+
+            } catch (error) {
+                console.error('Error fetching results:', error);
+                spinner.style.display = 'none'; // Hide loading spinner on error
+                alert('Error fetching data. Please try again later.');
+            }
+        }
+
+
+
+        
+
+        function displayResults(data, tabId, key) {
+            const container = document.getElementById(`${tabId}-results`);
+            container.innerHTML = ''; // Clear previous content
+
+            if (data[key].length === 0) {
+                container.innerHTML = `<p class="no-results">No ${key} available.</p>`;
+            } else {
+                data[key].forEach(item => {
+                    container.innerHTML += `
+                        <div class="col-md-4 d-flex align-items-stretch result-card">
+                            <div class="card shadow-sm">
+                                <img src="${item.image_url || 'https://via.placeholder.com/500x300'}" class="card-img-top" alt="${item.name}">
+                                <div class="card-body">
+                                    <h5 class="card-title">${item.name}</h5>
+                                    ${key === 'hotels' ? `
+                                        <p class="card-text"><strong>Location:</strong> ${item.location}</p>
+                                        <p class="card-text"><strong>Price:</strong> RM${item.price}</p>
+                                        <p class="card-text"><strong>Rating:</strong> ${item.rating}</p>
+                                    ` : ''}
+                                    ${key === 'attractions' ? `
+                                        <p class="card-text">${item.description}</p>
+                                        <p class="card-text"><strong>Category:</strong> ${item.category}</p>
+                                        <p class="card-text"><strong>Reviews:</strong> ${item.review_count}</p>
+                                    ` : ''}
+                                    ${key === 'restaurants' ? `
+                                        <p class="card-text"><strong>Category:</strong> ${item.category}</p>
+                                        <p class="card-text"><strong>Rating:</strong> ${item.number_of_green_bubbles}</p>
+                                        <p class="card-text"><strong>Reviews:</strong> ${item.review_count}</p>
+                                        <p class="card-text"><strong>Price:</strong> RM${item.price}</p>
+                                    ` : ''}
+                                    <a href="${item.place_link || item.restaurant_url}" class="btn btn-primary mt-2">View More</a>
+                                </div>
+                            </div>
+                        </div>`;
+                });
+            }
+        }
+
+        const sessionId = '{{ session_id }}'; // Ensure your server-side template engine processes this
+        fetchResults(sessionId);
+    </script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const tabs = document.querySelectorAll(".tab");
+
+            tabs.forEach(tab => {
+                tab.addEventListener("click", () => {
+                    tabs.forEach(t => t.classList.remove("active"));
+                    tab.classList.add("active");
+                });
+            });
+        });
+    </script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+    const spinner = document.getElementById("spinner");
+    if (spinner) {
+        spinner.style.display = 'block';
+    }
+});
+
+</script>
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+
+    <div id="spinner" style="display: none;">Loading...</div>
+
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <div id="loadingSpinner" style="display: none;">Loading...</div>
+
+
+</body>
+
+</html>

@@ -1,0 +1,21 @@
+tourly/
+    pycache
+    readme-images
+    static
+        css
+           style.css
+        images
+	js
+       	   script.js
+    templates
+        index.html
+    scrapy
+        scrapy.cfg
+        settings.py
+        spiders    
+	     hotelspider.py
+    	     attractionspider.py
+    	     restaurantspider.py
+    app.py
+    scraping_status.py
+    test_redis_connection.py
